@@ -1,11 +1,13 @@
+require_relative "card.rb"
+
 class Board
     def initialize(n)
         @grid = Array.new(n) { Array.new(n, " " )}
         @size = n * n
     end
-
+    
     def create_cards
-        possible_face_values = "abcdefghijklmnopqrstuvwxyz"
+        possible_face_values = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         cards = []
 
         while cards.length < @size
@@ -20,11 +22,32 @@ class Board
     end
 
     def populate
-
+        cards = self.create_cards
+        @grid.each do |row|
+            row.map! do |ele|
+                cards.delete_at(rand(cards.length))
+            end
+        end
+        @grid
     end
 
     def render
-
+        rendered_grid = []
+        @grid.each do |row|
+            rendered_row = []
+            row.each do |ele|
+                if ele.face_up
+                    rendered_row << ele.face_value
+                else
+                    rendered_row << " "
+                end
+            end
+            rendered_grid << rendered_row
+        end
+        idx_arr = []
+        (0...@grid.length).each { |i| idx_arr << i }
+        puts "  #{idx_arr.join(" ")}"
+        rendered_grid.each_with_index { |row, i| puts i.to_s + row.join(" ") }
     end
 
     def won?
@@ -35,3 +58,7 @@ class Board
 
     end
 end
+
+b = Board.new(4)
+b.populate
+b.render

@@ -2,8 +2,8 @@ require_relative "board.rb"
 require_relative "game.rb"
 
 class Game 
-    def initialize
-        @board = Board.new
+    def initialize(n)
+        @board = Board.new(n)
         @previously_guessed_position = []
     end
 
