@@ -1,10 +1,9 @@
 class Card
-    attr_reader :face_value, :face_up
+    attr_reader :face_value
     
     def initialize(face_value)
         @face_value = face_value
-        raise "face_value must be a single letter" if face_value.length != 1
-        @face_up = false
+        @face_up = true
     end
 
     def display_card
@@ -23,6 +22,10 @@ class Card
         @face_up = true
     end
 
+    def face_up?
+        @face_up
+    end
+
     def to_s
 
     end
@@ -31,3 +34,4 @@ class Card
 
     end
 end
+

@@ -1,9 +1,21 @@
 require_relative "card.rb"
 
 class Board
-    def initialize(n)
-        @grid = Array.new(n) { Array.new(n, " " )}
+    attr_reader :size
+
+    def initialize(n = 4)
+        @grid = Array.new(n) { Array.new(n)}
         @size = n * n
+    end
+
+    def [](position)
+        row, col = position
+        @grid[row][col]
+    end
+
+    def []=(position, value)
+        row, col = position
+        @grid[row][col] = value
     end
     
     def create_cards
@@ -18,35 +30,25 @@ class Board
             cards << card_1
             cards << card_2
         end
-        cards
+        cards.shuffle!
     end
 
     def populate
         cards = self.create_cards
-        @grid.each do |row|
-            row.map! do |ele|
-                cards.delete_at(rand(cards.length))
+        @grid.each_index do |idx|
+            @grid[idx].each_index do |idx_2|
+                @grid[idx][idx_2] = cards.shift
             end
         end
-        @grid
     end
 
     def render
-        rendered_grid = []
-        @grid.each do |row|
-            rendered_row = []
-            row.each do |ele|
-                if ele.face_up
-                    rendered_row << ele.face_value
-                else
-                    rendered_row << " "
-                end
-            end
-            rendered_grid << rendered_row
-        end
+        system("clear")
         idx_arr = (0...@grid.length).map { |i| i }
         puts "  #{idx_arr.join(" ")}"
-        rendered_grid.each_with_index { |row, i| puts "#{i.to_s} #{row.join(" ")}" }
+        @grid.each_with_index do |row, i|
+            puts "#{i} #{row.join(" ")}"
+        end
     end
 
     def won?
@@ -54,11 +56,12 @@ class Board
     end
 
     def reveal(position)
-        row, col = position
-        card = @grid[row][col]
-        card.reveal
+        # row, col = position
+        # card = @grid[row][col]
+        # card.reveal
     end
 end
+
 
 b = Board.new(4)
 b.populate
