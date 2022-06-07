@@ -1,3 +1,9 @@
 class HumanPlayer
-    def initialize
+    def get_input
+
+    end
+
+    def prompt
+
+    end
 end

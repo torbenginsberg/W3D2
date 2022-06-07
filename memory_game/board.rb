@@ -44,18 +44,19 @@ class Board
             end
             rendered_grid << rendered_row
         end
-        idx_arr = []
-        (0...@grid.length).each { |i| idx_arr << i }
+        idx_arr = (0...@grid.length).map { |i| i }
         puts "  #{idx_arr.join(" ")}"
-        rendered_grid.each_with_index { |row, i| puts i.to_s + row.join(" ") }
+        rendered_grid.each_with_index { |row, i| puts "#{i.to_s} #{row.join(" ")}" }
     end
 
     def won?
 
     end
 
-    def reveal
-
+    def reveal(position)
+        row, col = position
+        card = @grid[row][col]
+        card.reveal
     end
 end
 

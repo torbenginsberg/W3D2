@@ -9,22 +9,18 @@ class Card
 
     def display_card
         if @face_up
-            p @face_value
+            @face_value
         else
-            p " "
+            nil
         end
     end
 
     def hide
-        if @face_up == true
-            @face_up = false
-        end
+        @face_up = false
     end
 
     def reveal
-        if @face_up == false
-            @face_up = true
-        end
+        @face_up = true
     end
 
     def to_s
